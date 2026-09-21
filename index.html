@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My To-Do List</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f2f2;
+            padding: 40px;
+        }
+
+        .container {
+            background: white;
+            max-width: 600px;
+            margin: auto;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 10px #ccc;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .input-box {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        input {
+            padding: 10px;
+        }
+
+        #taskInput {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        button {
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .add-btn {
+            background: green;
+            color: white;
+        }
+
+        ul {
+            padding: 0;
+        }
+
+        li {
+            list-style: none;
+            background: #eeeeee;
+            margin: 10px 0;
+            padding: 12px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .task-info {
+            flex: 1;
+        }
+
+        .task-name {
+            font-weight: bold;
+        }
+
+        .task-time {
+            font-size: 14px;
+            color: #555;
+            margin-top: 5px;
+        }
+
+        .delete-btn {
+            background: red;
+            color: white;
+        }
+
+        .complete-btn {
+            background: #555;
+            color: white;
+        }
+
+        .completed {
+            text-decoration: line-through;
+            opacity: 0.6;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>My To-Do List</h1>
+
+        <div class="input-box">
+
+            <input
+                type="text"
+                id="taskInput"
+                placeholder="Enter a new task">
+
+            <input
+                type="date"
+                id="taskDate">
+
+            <input
+                type="time"
+                id="taskTime">
+
+            <button class="add-btn" onclick="addTask()">
+                Add
+            </button>
+
+        </div>
+
+        <ul id="taskList"></ul>
+
+    </div>
+
+
+    <script>
+
+        function addTask() {
+
+            const taskInput = document.getElementById("taskInput");
+            const taskDate = document.getElementById("taskDate");
+            const taskTime = document.getElementById("taskTime");
+
+            const task = taskInput.value.trim();
+
+            if (task === "") {
+                alert("Please enter a task!");
+                return;
+            }
+
+            if (taskDate.value === "") {
+                alert("Please select a date!");
+                return;
+            }
+
+            if (taskTime.value === "") {
+                alert("Please select a time!");
+                return;
+            }
+
+            const li = document.createElement("li");
+
+            const taskInfo = document.createElement("div");
+            taskInfo.className = "task-info";
+
+            const taskName = document.createElement("div");
+            taskName.className = "task-name";
+            taskName.textContent = task;
+
+            const taskDateTime = document.createElement("div");
+            taskDateTime.className = "task-time";
+            taskDateTime.textContent =
+                "📅 " + taskDate.value +
+                "  ⏰ " + taskTime.value;
+
+            taskInfo.appendChild(taskName);
+            taskInfo.appendChild(taskDateTime);
+
+
+            const completeButton = document.createElement("button");
+            completeButton.className = "complete-btn";
+            completeButton.textContent = "✓";
+
+            completeButton.onclick = function () {
+                taskName.classList.toggle("completed");
+            };
+
+
+            const deleteButton = document.createElement("button");
+            deleteButton.className = "delete-btn";
+            deleteButton.textContent = "Delete";
+
+            deleteButton.onclick = function () {
+                li.remove();
+            };
+
+
+            li.appendChild(taskInfo);
+            li.appendChild(completeButton);
+            li.appendChild(deleteButton);
+
+            document.getElementById("taskList").appendChild(li);
+
+
+            taskInput.value = "";
+            taskDate.value = "";
+            taskTime.value = "";
+        }
+
+    </script>
+
+</body>
+</html>
